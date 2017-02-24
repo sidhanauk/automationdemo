@@ -1,0 +1,37 @@
+---
+- name: copy nginx config file
+  template:  src=nginx-load-balancer.conf dest=/etc/nginx/sites-available/default
+  notify: Restart Nginx
+
+- name: enable configuration
+  file: >
+    dest=/etc/nginx/sites-enabled/default
+    src=/etc/nginx/sites-available/default
+    state=link
+  notify: Restart Nginx
+
+- name: Make sure we have a 'sudo' group
+  group: name={{ item }} state=present
+  with_items:
+    - sudo
+    - admin
+
+- name: Allow 'sudo' group to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%sudo'
+    line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+
+- name: Add vagrant user to sudo group
+  user: name=vagrant groups=sudo append=yes state=present createhome=yes
+
+- name: Allow 'admin' group to have password sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%admin'
+    line: '%admin ALL=(ALL) ALL'
+
+- name: Add test user to admin group
+  user: name=test groups=admin append=yes state=present createhome=yes
