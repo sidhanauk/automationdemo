@@ -1,8 +1,8 @@
 controller ansible_connection=local
 
-load_balancer      ansible_ssh_host=10.0.15.11 ansible_ssh_user='vagrant' ansible_ssh_private_key_file=/vagrant/.vagrant/machines/load_balancer/virtualbox/private_key
-web1      ansible_ssh_host=10.0.15.21 ansible_ssh_user='vagrant' ansible_ssh_private_key_file=/vagrant/.vagrant/machines/web1/virtualbox/private_key
-web2      ansible_ssh_host=10.0.15.22 ansible_ssh_user='vagrant' ansible_ssh_private_key_file=/vagrant/.vagrant/machines/web2/virtualbox/private_key
+load_balancer      ansible_ssh_host=10.0.0.11 ansible_ssh_user='vagrant' ansible_ssh_private_key_file=/vagrant/.vagrant/machines/load_balancer/virtualbox/private_key
+web1      ansible_ssh_host=10.0.0.21 ansible_ssh_user='vagrant' ansible_ssh_private_key_file=/vagrant/.vagrant/machines/web1/virtualbox/private_key
+web2      ansible_ssh_host=10.0.0.22 ansible_ssh_user='vagrant' ansible_ssh_private_key_file=/vagrant/.vagrant/machines/web2/virtualbox/private_key
 
 [webservers]
 web[1:2]

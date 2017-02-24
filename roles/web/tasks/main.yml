@@ -14,18 +14,20 @@
   file: path=/usr/share/nginx/html/* state=absent
   ignore_errors: True #ignore errors incase if site not avaialble nothing to clean
 
-#Generates web page based on ansible varibales
-#- name: deploy website content
-#  template: src=index.html dest=/usr/share/nginx/html/index.html
-
 # Example from Ansible Playbooks
 - name: Clear deployment container directory
-  command: rm -rf /usr/share/nginx/html/
+  file: 
+    path: /usr/share/nginx/html/
+    state: absent
 
 - name: deploy website content from github
   git: repo=https://github.com/leemark/co-data-pull.git
          dest=/usr/share/nginx/html/
 #         version={{ app_version }}
+
+#Generates web page based on ansible varibales
+- name: deploy website content
+  template: src=index.html dest=/usr/share/nginx/html/index.html
 
 - name: enable configuration
   file: >
