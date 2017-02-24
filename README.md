@@ -48,9 +48,9 @@ To re-run a playbook on an existing VM, just run:
 $ vagrant provision
 
 Script to test loadbalancer is distributing load to web nodes 
-$ ruby test_loadbalancer.rb
-"web2 ====>  50"
-"web1 ====>  50"
+- $ ruby test_loadbalancer.rb
+  - "web2 ====>  50"
+  - "web1 ====>  50"
 
 Remarks:
 - Not able to test the nginx port 80 using inline shell provisioner in vagrant
