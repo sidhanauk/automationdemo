@@ -18,7 +18,7 @@ Solution:
 --------------------------------
 This project uses Vagrant to launch web nodes and configure nginx as loadbalancer. Ansible is used for Provisioning the virtual machines.
 
-Vagrant: Vagrant script creates 1 Ansible Controller machine and N number of virtual ubuntu boxes to be used as web servers and 1 VM tobe used as load balancer. 
+Vagrant: Vagrant script creates 1 Ansible Controller machine and N number of virtual ubuntu boxes to be used as web servers and 1 VM to be used as load balancer. 
 
 Variables in vagrant file:
 - Ansible Controler Machine IP: 10.0.0.10
@@ -27,7 +27,7 @@ Variables in vagrant file:
 
 Roles:
 - common - holds common tasks and handlers to both load balancer and web server. This installs nginx and git
-- lb - holds task and handlers for loadbalancer. It also has config template for ngnix loadbalancer setup. Loadbalacing is performed in roundrobin way. 
+- lb - holds task and handlers for loadbalancer. It also has config template for ngnix loadbalancer setup. Load balacing is performed in roundrobin way. 
 - web - holds task and handlers for web servers. It also has html and config template for nginx webserver setup.
 
 Playbook: pb_webserver.yml
