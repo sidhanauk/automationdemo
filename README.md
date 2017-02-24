@@ -1,8 +1,6 @@
 Task:
-
-The solution should contain a Vagrantfile, all associated configuration management files, and a README that lists both the steps we 
-should run to duplicate your solution and any assumed software version(s). The solution should only require vagrant installed on the 
-host machine with all additional software installed on the virtual machines. 
+--------------------------------
+The solution should contain a Vagrantfile, all associated configuration management files, and a README that lists both the steps we should run to duplicate your solution and any assumed software version(s). The solution should only require vagrant installed on the  host machine with all additional software installed on the virtual machines. 
 · Create a Vagrantfile that creates a single machine using this box:https://vagrantcloud.com/puppetlabs/boxes/ubuntu-14.04-64-nocm and installs the latest released version of your chosen configuration management tool. 
 · Install the nginx webserver via configuration management. 
 · Run a simple test using Vagrant's shell provisioner to ensure that nginx is listening on port 80 
@@ -17,44 +15,44 @@ I’m interested in your working as much as your answers, so where you make a de
 
 
 Solution:
+--------------------------------
 This project uses Vagrant to launch web nodes and configure nginx as loadbalancer. Ansible is used for Provisioning the virtual machines.
 
 Vagrant: Vagrant script creates 1 Ansible Controller machine and N number of virtual ubuntu boxes to be used as web servers and 1 VM tobe used as load balancer. 
 
-==> variables in vagrant file:
- - Ansible Controler Machine IP: 10.0.0.10
- - Load balancer IP: 10.0.0.11 
- - Webserver ip address starts from 10.0.0.21
+Variables in vagrant file:
+- Ansible Controler Machine IP: 10.0.0.10
+- Load balancer IP: 10.0.0.11 
+- Webserver ip address starts from 10.0.0.21
 
- - Roles:
- - common - holds common tasks and handlers to both load balancer and web server. This installs nginx and git
- - lb - holds task and handlers for loadbalancer. It also has config template for ngnix loadbalancer setup. Loadbalacing is performed in roundrobin way. 
- - web - holds task and handlers for web servers. It also has html and config template for nginx webserver setup.
+Roles:
+- common - holds common tasks and handlers to both load balancer and web server. This installs nginx and git
+- lb - holds task and handlers for loadbalancer. It also has config template for ngnix loadbalancer setup. Loadbalacing is performed in roundrobin way. 
+- web - holds task and handlers for web servers. It also has html and config template for nginx webserver setup.
 
+Playbook: pb_webserver.yml
+This provisions web nodes by installing git, nginx and copy index.html template to webnodes. Data API git repo is downloaded and installed. Also configured nginx to add a custom response header to include name of hosts.
 
- - Playbook: pb_webserver.yml
-  This provisions web nodes by installing git, nginx and copy index.html template to webnodes. Data API git repo is downloaded and installed. Also configured nginx to add a custom response header to include name of hosts.
- -
- - Playbook: pb_loadbalancer.yml 
- This provisions loadbalance node and also updates the config file for load balancer based on number of web nodes created. It uses facts from ansible to get the ip address of the hosts and add them in load balancer config of nginx.
- -
- -Test the loadbalancer and Web nodes
- -Script test_loadbalancer.rb is included which sends 100 requests to loadbalanced host and reads the host name (from response header) and stores the count of different hosts it has received response from.
- -
- -How to run:
- -
- -$ vagrant up 
- -
- -This will start the Web Nodes, Loadbalancer and Ansible controller VM's, and run the provisioning playbook (on the first VM startup).
- -To re-run a playbook on an existing VM, just run:
- -
- -$ vagrant provision
- -
- -- \$ ruby test_loadbalancer.rb 
-   "web2 ====>  50"
-   "web1 ====>  50"
+Playbook: pb_loadbalancer.yml 
+This provisions loadbalance node and also updates the config file for load balancer based on number of web nodes created. It uses facts from ansible to get the ip address of the hosts and add them in load balancer config of nginx.
 
-- Remarks:
+Test the loadbalancer and Web nodes
+Script test_loadbalancer.rb is included which sends 100 requests to loadbalanced host and reads the host name (from response header) and stores the count of different hosts it has received response from.
+
+How to run:
+$ vagrant up 
+
+This will start the Web Nodes, Loadbalancer and Ansible controller VM's, and run the provisioning playbook (on the first VM startup).
+
+To re-run a playbook on an existing VM, just run:
+$ vagrant provision
+
+Script to test loadbalancer is distributing load to web nodes 
+$ ruby test_loadbalancer.rb 
+"web2 ====>  50"
+"web1 ====>  50"
+
+Remarks:
 - Not able to test the nginx port 80 using inline shell provisioner in vagrant
 - Ansible inventory is not dynamic and can be done as improvement 
 - Test script can be parameterized
