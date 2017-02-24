@@ -40,12 +40,12 @@ Test the loadbalancer and Web nodes
 Script test_loadbalancer.rb is included which sends 100 requests to loadbalanced host and reads the host name (from response header) and stores the count of different hosts it has received response from.
 
 How to run:
-$ vagrant up 
+- $ vagrant up 
 
 This will start the Web Nodes, Loadbalancer and Ansible controller VM's, and run the provisioning playbook (on the first VM startup).
 
 To re-run a playbook on an existing VM, just run:
-$ vagrant provision
+- $ vagrant provision
 
 Script to test loadbalancer is distributing load to web nodes 
 - $ ruby test_loadbalancer.rb
