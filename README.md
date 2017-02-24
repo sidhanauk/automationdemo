@@ -34,10 +34,10 @@ Vagrant: Vagrant script creates 1 Ansible Controller machine and N number of vir
 
  - Playbook: pb_webserver.yml
   This provisions web nodes by installing git, nginx and copy index.html template to webnodes. Data API git repo is downloaded and installed. Also configured nginx to add a custom response header to include name of hosts.
-
+ -
  - Playbook: pb_loadbalancer.yml 
  This provisions loadbalance node and also updates the config file for load balancer based on number of web nodes created. It uses facts from ansible to get the ip address of the hosts and add them in load balancer config of nginx.
-
+ -
  -Test the loadbalancer and Web nodes
  -Script test_loadbalancer.rb is included which sends 100 requests to loadbalanced host and reads the host name (from response header) and stores the count of different hosts it has received response from.
  -
